@@ -24,7 +24,7 @@ O endpoint começa na API Gateway, validando se o usuário possui o parâmetro n
 
 O endpoint começa com API Gateway validando o schema, de acordo com o arquivo *LoanRequest.json*, localizado no diretório 0.schemas. Se a validação estiver correta, os dados são direcionados para a função lambda *noverde-post*. Nesta função doi eventos ocorrem, a gravação inicial do usuário no banco de dados, e o disparo de uma mensagem no SQS. Apesar de ser possível o envio de todo o conteúdo nas mensagens SQS, a escolha de inserir no banco para consulta foi tomada para evitar conflitos na busca dessa informação, tendo em vista que o SQS esconde as mensagens da fila quando elas estão em processamento.
 
-## Processing
+### Processing
 
 O processamento se inicia com um gatilho do SQS, que envia a mensagem como um parametro em events, na função handler. Como esse gatilho não ocorre em ambientes locais, uma forma alternativa de buscar a mensagem foi implementada. Se não for possível receber a mensagem via parametro, será realizada uma tentativa pela chamada da queue via software.
 
@@ -38,3 +38,5 @@ A Documentação interna no código conta com docstrings, typing e tipos de par�
 ## Observações
 
 No repositório estão marcadas as alterações realizadas no código com o passar do tempo. Também está marcado em qual commit foi realizado o envio para a AWS.
+
+A abstração de alguns métodos em classes separadas era desejada, porém devido ao tempo curto, não foi possível implementar. O mesmo se diz sobre orientação objeto e patterns MVC, MVVM,etc... Com o projeto dividido em funções, se mostrou mais direto trabalhar os dados em formato json, ao invés de criar uma classe, e mapear as propriedades. Em ambientes maiores, este mapeamento pode se fazer necessário.
