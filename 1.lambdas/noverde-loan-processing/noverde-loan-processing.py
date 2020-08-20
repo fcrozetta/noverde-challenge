@@ -9,17 +9,19 @@ def lambda_handler(event, context):
     
     loanDb = LoanRequestsDb()
     id = None
+
+    # Gets the ID from SQS trigger, or calling from local machine
     try:
-        
         sqsMessage = event['Records'][0]
-        print('id via sqs')
         id = sqsMessage['body']
+        print('id via sqs')
     except KeyError:
+        id = loanDb.getIdFromSqs()
         print('id via loanRequest call')
-        id = loanDb.getQueueMessages()
         
     print(f'ID : {str(id)}')
-    
+
+    # Sanity check. Only proceeds if there is an ID
     if id == None:
         return
 

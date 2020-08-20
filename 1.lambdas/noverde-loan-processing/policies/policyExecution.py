@@ -6,6 +6,10 @@ class PolicyExecution(object):
 
     @staticmethod
     def executePolicies(customer):
+        '''
+        This class is the entry point for the policies execution.
+        Every new policy has to be added here
+        '''
         isCustomerApproved=True
         returnMessage = ""
 

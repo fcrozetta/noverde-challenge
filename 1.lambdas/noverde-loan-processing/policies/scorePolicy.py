@@ -5,6 +5,10 @@ import json
 class ScorePolicy(object):
     @staticmethod
     def validate(customer) -> Tuple[bool,str]:
+        '''
+        Validates the customer Score.
+        Returns a tuple with status(bool) and a message(score or refuse message)
+        '''
         http = urllib3.PoolManager()
 
         #! API KEY IS VISIBLE ON CODE JUST FOR THE CHALLENGE

@@ -36,13 +36,15 @@ class CommitmentPolicy(object):
         return CommitmentPolicy.PMT(float(customer['amount']),int(customer['terms']),availableIncome,float(score))
     
     @staticmethod
-    def PMT(pv,n,availableIncome,score):
+    def PMT(pv,n,availableIncome,score) -> Tuple[bool,any]:
         '''
         Calculate the possible PMT for the paramters
         pv: requested value,
         n: terms,
         availableIncome: Income available after commitment percentage
         score: Serasa customer's score
+
+        Returns a tuple with the result(bool), and a message: terms/None
         '''
         if n == 12:
             return (false,'Commintment lower than the minimum necessary')
@@ -54,7 +56,7 @@ class CommitmentPolicy(object):
                 return CommitmentPolicy.PMT(pv, n+3,availableIncome,score)
 
     @staticmethod
-    def getInterestRate(score,terms):
+    def getInterestRate(score,terms) -> float:
         '''
         get the interest rate based on score levels and terms
         '''

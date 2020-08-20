@@ -13,7 +13,11 @@ class AgePolicy(object):
         else:
             return (True,"Approved")
 
-def calculate_age(birthdate):
+def calculate_age(birthdate: str) -> int:
+    '''
+    Return the age, based on birthdate.
+    This function considers the timezone at server location (UTC 00:00 usually)
+    '''
     born = datetime.strptime(birthdate,'%Y-%m-%d')
     today = date.today()
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
