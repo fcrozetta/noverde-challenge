@@ -1,0 +1,8 @@
+{
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "title" : "Loan Error response Schema",
+  "type" : "object",
+  "properties" : {
+      "errors":{ "type": "array"}
+  }
+}
