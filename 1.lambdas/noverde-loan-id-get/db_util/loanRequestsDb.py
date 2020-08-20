@@ -7,13 +7,16 @@ class LoanRequestsDb(object):
     def __init__(self):
         self.queueName = 'noverde-loan'
     
-    def checkRequest(self,id: str) -> dict:
+    def checkRequest(self, id: str) -> dict:
         # Get the service resource.
         dynamodb = boto3.resource('dynamodb')
         table = dynamodb.Table('loanRequests')
-        data = table.get_item(
-            Key={
-                'id': id,
-            }
-        )
-        return data
+        try:
+            data = table.get_item(
+                Key={
+                    'id': id,
+                }
+            )
+            return data
+        except KeyError:
+            return None
