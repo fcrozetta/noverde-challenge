@@ -14,10 +14,15 @@ def lambda_handler(event, context):
         return {
             'statusCode': 400
         }
-   
+
     return {
         "statusCode":200,
-        'body': json.dumps(getLoanResponse(id))
+        'body': json.dumps(getLoanResponse(id)),
+        'headers': {
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': '*'
+        },
         
     }
 
@@ -51,12 +56,3 @@ def getLoanResponse(id):
         if response['result'] == 'refused':
             response['refused_policy'] = item['refused_policy']
     return response
-
-
-
-if __name__ == "__main__":
-    json.dumps(lambda_handler({
-        "pathParameters": {
-            "id": '32fbdd96-df46-11ea-88de-f35f8eff49e0'
-        }
-    }, {}))

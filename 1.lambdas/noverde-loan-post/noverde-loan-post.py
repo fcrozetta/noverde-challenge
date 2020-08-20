@@ -25,7 +25,12 @@ def lambda_handler(event, context):
     queue.send_message(MessageBody=id)
     return {
         'statusCode': 200,
-        'body': json.dumps({"id":id})
+        'body': json.dumps({"id":id}),
+        'headers': {
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': '*'
+        },
     }
 
 
