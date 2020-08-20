@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button (click)="dismiss()">
+          Fechar
+        </ion-button>
+      </ion-buttons>
+    <ion-title>{{result}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-card>
+  <ion-card-header>
+    <!-- <ion-card-subtitle>{{status}}</ion-card-subtitle> -->
+    <ion-card-title>{{status}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-label>Valor: {{amount}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Parcelas: {{terms}}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="refused_policy">
+      <ion-label>Motivo de recusa: {{refused_policy}}</ion-label>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+</ion-content>

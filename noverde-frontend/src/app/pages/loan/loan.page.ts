@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { NoverdeService } from 'src/app/services/noverde.service';
+import { ModalController } from '@ionic/angular';
+import { ResultLoanPage } from '../../modals/result-loan/result-loan.page';
 
 @Component({
   selector: 'app-loan',
@@ -31,23 +33,50 @@ export class LoanPage implements OnInit {
 
 
 
-  constructor(private storage: Storage, private noverde: NoverdeService) { }
+  constructor(private storage: Storage, private noverde: NoverdeService, private modalController: ModalController) { }
 
   addLoanRequest(){
     this.newLoanData.birthdate = this.fullBirthdate.split('T')[0];
     this.noverde.sendLoanRequest(this.newLoanData).then(data => {
-      console.log(data);
-    })
+      // tslint:disable-next-line: no-string-literal
+      const returnedId = data['body']['id'];
+      this.requests.push({id: returnedId , name: this.newLoanData.name});
+      console.log(this.requests);
+      
+      this.storage.set('requests', this.requests);
+    });
 
   }
 
-  checkRequest(id){
-    this.noverde.checkLoanRequest(id);
+  async checkRequest(id){
+    let returnedData = null;
+    await this.noverde.checkLoanRequest(id).then(data => {
+      console.log(data);
+      
+      returnedData = {
+        'status' : data['body']['status'],
+        'result': data['body']['result'],
+        'refused_policy': data['body']['refused_policy'],
+        'amount': data['body']['amount'],
+        'terms': data['body']['terms'],
+
+      }
+    });
+    const modal = await this.modalController.create({
+      component: ResultLoanPage,
+      // tslint:disable-next-line: no-string-literal
+      componentProps: returnedData
+    });
+    console.log(returnedData);
+    
+    modal.present();
   }
 
   ngOnInit() {
     this.storage.get('requests').then(req => {
-      this.requests = req;
+      if (req !== null) {
+        this.requests = req;
+      }
     });
   }
 

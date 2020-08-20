@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,6 @@ export class NoverdeService {
   constructor(private http: HttpClient) { }
 
   sendLoanRequest(data){
-    console.log(data);
     return this.http.post(this.url, data, this.getHeader()).toPromise();
   }
 
@@ -20,9 +20,9 @@ export class NoverdeService {
   getHeader(): object{
     const headers =
     { headers: new HttpHeaders({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
         // tslint:disable-next-line: object-literal-key-quotes
-        , 'Accept': '*'
+        'Accept': '*'
         // tslint:disable-next-line: object-literal-key-quotes
         // , 'Authorization': `Bearer ${token}`
     }) , observe: 'response'};

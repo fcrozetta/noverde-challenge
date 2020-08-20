@@ -42,12 +42,16 @@
     </ion-card>
   </ion-list>
   <ion-list>
-    <ion-item *ngFor="let request of requests">
+    <ion-item *ngFor="let request of requests" expand='block'>
       <ion-card>
         <ion-card-header>
-          <ion-card-subtitle>request.id</ion-card-subtitle>
-          <ion-card-title>request.name</ion-card-title>
+          <ion-card-subtitle>{{request.id}}</ion-card-subtitle>
+          <ion-card-title>{{request.name}}</ion-card-title>
         </ion-card-header>
+        <ion-button (click)="checkRequest(request.id)">
+          <ion-icon slot="start" name="add"></ion-icon>
+          Consultar resultado
+        </ion-button>
       </ion-card>
     </ion-item>
   </ion-list>
