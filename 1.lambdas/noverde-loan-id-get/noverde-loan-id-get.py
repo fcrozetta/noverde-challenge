@@ -1,6 +1,5 @@
 import json
-import boto3
-
+from loanRequestsDb import LoanRquestsDb
 
 def lambda_handler(event, context):
     '''
@@ -27,21 +26,17 @@ def lambda_handler(event, context):
     }
 
 
-def getLoanResponse(id):
+def getLoanResponse(id: str) -> dict:
+    '''
+    Return the response from the DB
+    '''
     # Sanity check
     if id is None:
         return {}
 
-    # Get the service resource.
-    dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table('loanRequests')
-    data = table.get_item(
-        Key={
-            'id': id,
-        }
-    )
+    db = LoanRquestsDb()
+    db.checkRequest(id)
 
-    item = data['Item']
     print(item)
     response = {
         "id":item['id'],
