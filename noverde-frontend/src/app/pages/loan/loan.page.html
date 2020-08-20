@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Loans</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>New Loan</ion-card-subtitle>
+        <ion-card-title>Add Request Data</ion-card-title>
+      </ion-card-header>
+      <ion-item>
+        <ion-label position="floating">Nome <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="text" [(ngModel)]="newLoanData.name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">cpf <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="text" [(ngModel)]="newLoanData.cpf"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Nascimento <ion-text color="danger">*</ion-text></ion-label>
+        <ion-datetime picker-format="DD MMM YYYY" display-format="DD MMMM YYYY"  [(ngModel)]="fullBirthdate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Valor <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="number" [(ngModel)]="newLoanData.amount"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Parcelas <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="number" [(ngModel)]="newLoanData.terms"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Renda <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="number" [(ngModel)]="newLoanData.income"></ion-input>
+      </ion-item>
+      <ion-button (click)="addLoanRequest()" expand='block' color='success'>
+        Adicionar
+        <ion-icon slot="end" name="add"></ion-icon>
+      </ion-button>
+    </ion-card>
+  </ion-list>
+  <ion-list>
+    <ion-item *ngFor="let request of requests">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>request.id</ion-card-subtitle>
+          <ion-card-title>request.name</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+</ion-content>
