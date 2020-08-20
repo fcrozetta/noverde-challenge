@@ -7,7 +7,11 @@ class AgePolicy(object):
         '''
         Customer age has to be 18+
         '''
-        age = calculate_age(customer['birthdate'])
+        try:
+            age = calculate_age(customer['birthdate'])
+        except ValueError:
+            return(False,'Birthdate is invalid')
+        
         if age < 18:
             return (False,"Customer cannot be underage")
         else:

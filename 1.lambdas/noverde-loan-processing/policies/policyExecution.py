@@ -1,7 +1,7 @@
 from policies.agePolicy import AgePolicy
 from policies.scorePolicy import ScorePolicy
 from policies.commitmentPolicy import CommitmentPolicy
-from loanRequestsDb import LoanRequestsDb
+from db_util.loanRequestsDb import LoanRequestsDb
 class PolicyExecution(object):
 
     @staticmethod

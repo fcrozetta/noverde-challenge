@@ -19,8 +19,8 @@ def test_invalid_key():
 
 def test_valid_key():
     '''
-    THIS WILL ALWAYS RETURN TRUE
+    THIS WILL ALWAYS Raises an error
     Necessary mock data to use, instead of real DB
     '''
     # TODO: Implement Test correctly
-    assert True
+    raise NotImplementedError

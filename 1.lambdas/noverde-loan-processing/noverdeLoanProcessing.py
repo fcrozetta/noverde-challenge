@@ -1,5 +1,5 @@
 import json
-from loanRequestsDb import LoanRequestsDb
+from db_util.loanRequestsDb import LoanRequestsDb
 from policies.policyExecution import PolicyExecution
 
 def lambda_handler(event, context):
