@@ -29,5 +29,6 @@ class CommitmentPolicy(object):
             response_body = json.loads(response.data)
             commitment = response_body['commitment']
 
+        # TODO: Implement rest of commitment policy
 
         return (False,"Commintment lower than the minimum necessary")

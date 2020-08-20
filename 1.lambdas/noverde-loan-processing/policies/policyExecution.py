@@ -22,9 +22,13 @@ class PolicyExecution(object):
         else:
             isCustomerApproved = False
             returnMessage += f'{message};'
+            
+
 
         # ! Commitment policy
-        isApproved,message = CommitmentPolicy.validate(customer,commitment)
+        # * validates only if everything is ok so far
+        if isCustomerApproved:
+            isApproved,message = CommitmentPolicy.validate(customer,commitment)
 
         # Return the flag after the policies and messages, if any
         return (isCustomerApproved,returnMessage)

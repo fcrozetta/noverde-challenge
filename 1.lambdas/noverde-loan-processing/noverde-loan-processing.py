@@ -20,10 +20,18 @@ def lambda_handler(event, context):
         customer = getCustomer(id)
 
         # policy processing
-        process(customer)
+        isApproved,refused_policy = process(customer)
 
-        #update DB
-        updateCustomer(id,customer)
+        # Updates Data on DynamoDB
+        if isApproved:
+            updateCustomer(id,{
+                'status': 'approved',
+            })
+        else:
+            updateCustomer(id,{
+                'status': 'refused',
+                'refused_policy': refused_policy
+            })
         
         # Let the queue know that the message is processed
         message.delete()
@@ -45,11 +53,28 @@ def getCustomer(id):
 
 # This function should execute every available policy
 def  process(customer):
-    result = PolicyExecution().executePolicies(customer)
-    print(result)
-    pass
-def updateCustomer(id,newData):
-    pass
+    return PolicyExecution().executePolicies(customer)
+
+def updateCustomer(id,newData:dict):
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table('loanRequests')
+    updateString = "set process_status = :s, process_result = :r "
+    ExpressionAttributeValues = {
+        ':s': 'completed',
+        ':r': newData['status']
+    }
+
+    if newData['status'] == "refused":
+        updateString += ", refused_policy = :rp"
+        ExpressionAttributeValues[':rp'] = newData['refused_policy']
+    # exit()
+    table.update_item(
+        Key={
+            'id': id,
+    },
+    UpdateExpression=updateString,
+    ExpressionAttributeValues = ExpressionAttributeValues
+)
 
 if __name__ == "__main__":
-    print(lambda_handler({}, {}))
+    lambda_handler({}, {})
