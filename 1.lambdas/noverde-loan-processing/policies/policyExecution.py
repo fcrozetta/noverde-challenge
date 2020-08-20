@@ -1,7 +1,7 @@
 from policies.agePolicy import AgePolicy
 from policies.scorePolicy import ScorePolicy
 from policies.commitmentPolicy import CommitmentPolicy
-
+from loanRequestsDb import LoanRequestsDb
 class PolicyExecution(object):
 
     @staticmethod
@@ -28,7 +28,14 @@ class PolicyExecution(object):
         # ! Commitment policy
         # * validates only if everything is ok so far
         if isCustomerApproved:
-            isApproved,message = CommitmentPolicy.validate(customer,commitment)
+            isApproved,commitmentReturn = CommitmentPolicy.validate(customer,commitment)
+            if isApproved:
+                db = LoanRequestsDb()
+                db.updateTerms(customer['id'],commitmentReturn)
+            else:
+                isCustomerApproved = False
+                returnMessage += commitmentReturn
+
 
         # Return the flag after the policies and messages, if any
         return (isCustomerApproved,returnMessage)
